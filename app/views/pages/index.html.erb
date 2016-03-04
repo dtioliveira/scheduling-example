@@ -1,0 +1,14 @@
+<h1>Index</h1>
+<% week_days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] %>
+<%= form_for :diary, url: root_path, method: :post do |f| %>
+  <%= f.month_field(:month, use_month_numbers: true) %><br>
+  <% week_days.each do |day| %>
+    <%= f.fields_for day.to_sym do |f| %>
+      <%= f.label day %>
+      <%= f.text_field :hours, value: params[:diary] ? params[:diary][day.to_sym][:hours] : nil %>
+      <br>
+    <% end %>
+  <% end %>
+
+  <%= f.submit "Send" %>
+<% end %>
